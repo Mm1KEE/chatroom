@@ -44,6 +44,7 @@ $(function() {
 					$("#btnSend").removeAttr("disabled");
 					logged=true;
 					mode="broadcast";
+					$("#targetdiv").hide();
 					setInterval("getUserList()", 5000);
 				};
 				//获得消息事件
@@ -169,12 +170,14 @@ function append2MsgDisPri(head,message){
 	$("#dis_private").append("<h6 class='list-group-item-heading' style='color:blue'>"+head+"</h6><p class='list-group-item-text'>"+message+"</p>");
 }
 function publicMode(){
+	$("#targetdiv").hide();
 	if(logged==true){
 		//alert("public");
 		mode="broadcast";
 	}
 };
 function privateMode(){
+	$("#targetdiv").show();
 	if(logged==true){
 		//alert("private");
 		mode="sendMsg";
