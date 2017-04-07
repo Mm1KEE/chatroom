@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="off">
+    <Properties>
+        <Property name="CATALINA_BASE_LOGPATH">../logs</Property>
+        <Property name="logLocalIP">10.11.12.13</Property>            
+    </Properties>
+    <appenders>
+    <console name="CONSOLE" target="SYSTEM_OUT">
+            <patternLayout charset="utf-8"
+                pattern="%date{yyyy-MM-dd HH:mm:ss}[%-5level]%logger[%L]-%message%n" />
+        </console>
+
+        <rollingFile name="CATALINA"
+            fileName="${CATALINA_BASE_LOGPATH}/log.log"
+            filePattern="${CATALINA_BASE_LOGPATH}/catalina.%date{yyyyMMdd}">              
+            <patternLayout charset="UTF-8"
+                pattern="%date{yyyy-MM-dd HH:mm:ss}[%-5level]%logger[%L]-%message%n" />
+            <policies>
+                <timeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </policies>
+        </rollingFile>
+
+        <rollingFile name="LOCALHOST"
+            fileName="${CATALINA_BASE_LOGPATH}/localhost.log"
+            filePattern="${CATALINA_BASE_LOGPATH}/localhost.%date{yyyyMMdd}">              
+            <patternLayout charset="UTF-8"
+                pattern="%date{yyyy-MM-dd HH:mm:ss}[%-5level]%logger[%L]-%message%n" />
+            <policies>
+                <timeBasedTriggeringPolicy />
+            </policies>
+        </rollingFile>
+
+        <rollingFile name="MANAGER"
+            fileName="${CATALINA_BASE_LOGPATH}/manager.log"
+            filePattern="${CATALINA_BASE_LOGPATH}/manager.%date{yyyyMMdd}">              
+            <patternLayout charset="UTF-8"
+                pattern="%date{yyyy-MM-dd HH:mm:ss}[%-5level]%logger[%L]-%message%n" />
+            <policies>
+                <timeBasedTriggeringPolicy />
+            </policies>
+        </rollingFile>
+
+        <rollingFile name="HOST-MANAGER"
+            fileName="${CATALINA_BASE_LOGPATH}/host-manager.log"
+            filePattern="${CATALINA_BASE_LOGPATH}/host-manager.%date{yyyyMMdd}">              
+            <patternLayout charset="UTF-8"
+                pattern="%date{yyyy-MM-dd HH:mm:ss}[%-5level]%logger[%L]-%message%n" />
+            <policies>
+                <timeBasedTriggeringPolicy />
+            </policies>
+        </rollingFile>         
+        
+        <RollingFile name="Error" fileName="${CATALINA_BASE_LOGPATH}/error.log"
+			filePattern="${CATALINA_BASE_LOGPATH}/error-%d{yyyy-MM-dd}-%i.log">
+			<ThresholdFilter level="error" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+		</RollingFile>    
+        
+
+    </appenders>
+
+    <loggers>
+        <logger name="org.apache.catalina.core.ContainerBase.[Catalina].[localhost]" level="INFO">
+            
+            <appender-ref ref="LOCALHOST" />    
+            
+        </logger>
+
+        <logger name="org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/manager]" level="INFO"  additivity="false">
+            
+            <appender-ref ref="MANAGER" />    
+        
+        </logger>
+
+        <logger name="org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/host-manager]" level="INFO"  additivity="false">
+            
+            <appender-ref ref="HOST-MANAGER" />    
+            
+        </logger>
+        
+        
+        <root level="all">                
+        	<appender-ref ref="Error"></appender-ref>
+            <appender-ref ref="CATALINA" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </loggers>
+</configuration>
