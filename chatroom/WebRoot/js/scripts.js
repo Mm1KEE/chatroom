@@ -141,6 +141,15 @@ $(function() {
 	$("#clr_pri").click(function() {
 		$("#dis_private").empty();
 	});
+	//检查剩余字数
+	var text_max = 200;
+	$("#count_message").html("还可输入" + text_max + "个字");
+	$("#msg").keyup(function() {
+		var text_length = $('#msg').val().length;
+		var text_remaining = text_max - text_length;
+		//alert(text_length);
+		$('#count_message').html("还可输入" + text_remaining + "个字");
+	});
 });
 //获得用户列表
 function getUserList(){
@@ -149,15 +158,7 @@ function getUserList(){
 		socket.send("getUserList" + "|" + new Date()+ "|" + user + "|" + "server"+ "|" + "getUserList");
 	}
 }
-//检查剩余字数
-var text_max = 200;
-$('#count_message').html("还可输入" + text_max + "个字");
-$('#msg').keyup(function() {
-	var text_length = $('#msg').val().length;
-	var text_remaining = text_max - text_length;
-	//alert(text_length);
-	$('#count_message').html("还可输入" + text_remaining + "个字");
-});
+
 //插入用户列表
 function append2UserList(user){
 	$("#userListUl").append("<li class='list-group-item'>"+user+"</li>");
